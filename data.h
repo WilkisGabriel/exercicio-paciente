@@ -5,6 +5,6 @@
 typedef struct data Data;
 
 Data lerData();
-void printData(Data d);
+int idade(Data d); //estou considerando o mes 4 e desconsiderando os dias
 
 #endif

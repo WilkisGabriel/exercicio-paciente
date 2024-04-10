@@ -15,7 +15,10 @@ Data lerData()
     return d;
 }
 
-void printData(Data d)
+int idade(Data d)
 {
-    printf("%d/%d/%d\n", d.dia, d.mes, d.ano);
+    int a = 2024-d.ano;
+    if(d.mes >= 4)
+     a++;
+    return a;
 }

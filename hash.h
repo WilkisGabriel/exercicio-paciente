@@ -11,5 +11,7 @@ Hash *Hcreate(int tam, hash_func hashf, get_akey getf, free_bucket_item freeb);
 void Herase(Hash *h);
 int hfunc(int akey, int htam);
 void Hinsert(Hash *h, void *item);
+int Hexist(int a, Hash *h);
+void* Hget(Hash *h, int key);
 
 #endif

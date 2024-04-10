@@ -13,4 +13,6 @@ void prntWounds(Paciente *p);
 
 void prntPaciente(Paciente *p);
 
+char *getID(Paciente *p);
+
 #endif

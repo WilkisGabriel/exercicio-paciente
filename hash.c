@@ -12,10 +12,10 @@ typedef struct bucket bucket_t;
 
 struct hash
 {
-    int tam;
-    int qnt;
+    int tam; //tamanho
+    int qnt; //quantidade no array 
     bucket_t **buckets;
-    hash_func hfunc;
+    hash_func hfunc; 
     get_akey getkey;
     free_bucket_item freecb;
 };
@@ -52,6 +52,7 @@ void Herase(Hash *h)
     }
 }
 
+
 bucket_t *Bcreate(int key, void *item)
 {
     bucket_t *b = (bucket_t *)calloc(1, sizeof(bucket_t));
@@ -60,6 +61,7 @@ bucket_t *Bcreate(int key, void *item)
     b->next = NULL;
     return b;
 }
+
 
 void Berase(bucket_t *b, free_bucket_item cb)
 {
@@ -75,10 +77,12 @@ void Berase(bucket_t *b, free_bucket_item cb)
     }
 }
 
-int hfunc(int akey, int htam)
+
+int hfunc(int akey, int htam) //retorna posicao do vetor basicamente
 {
     return akey % htam;
 }
+
 
 void Hinsert(Hash *h, void *item)
 {
@@ -97,4 +101,37 @@ void Hinsert(Hash *h, void *item)
         aux->next = b; // insere no prox;
     }
     h->qnt++;
+}
+
+int Hexist(int key, Hash *h){
+    if(h->buckets[h->hfunc(a,h->tam)] != NULL){ // se a posicao dessa chave nao estiver vazia
+      if(h->buckets[h->hfunc(a,h->tam)]->chave == key) //e for igual a chave
+        return 1; // verdadeiro
+      else{
+       bucket_t *aux = h->buckets[h->hfunc(a,h->tam)]; 
+       for(aux->next != NULL){ //roda a lista
+         aux = aux->next;
+         if(aux->chave == key)
+          return 1;
+       }
+      }
+        
+    }
+  return 0; // se chegar eh pq nao existe 
+}
+
+void* Hget(Hash *h, int key){
+
+    bucket_t *aux = h->buckets[h->hfunc(key, h->tam)];
+    if(aux == NULL)
+     return NULL;
+    else{
+      if(aux->chave == key)
+       return aux->item;
+      else 
+       for(aux=aux->next; aux!=NULL ;aux=aux->next)
+         if(aux->chave == key)
+          return aux->item;      
+    }
+   return NULL;
 }
